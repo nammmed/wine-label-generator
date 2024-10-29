@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React  from 'react';
 import {
     Container,
     Paper,
-    Button,
     Alert,
     Typography,
     Divider
 } from '@mui/material';
-import GenerationSettings from './GenerationSettings';
 import SavedLabels from './SavedLabels';
 import {useWineForm} from "../hooks/useWineForm";
 import {useGenerationSettings} from "../hooks/useGenerationSettings";
@@ -19,7 +17,7 @@ import GeneratedResult from "./GeneratedResult";
 const LabelGenerator = () => {
     const { formData, handleChange } = useWineForm();
     const { settings, handleSettingsChange } = useGenerationSettings();
-    const { loading, generatedImage, status, generateImage, setStatus } = useImageGeneration();
+    const { loading, generatedImage, status, generateImage, setStatus, prompt } = useImageGeneration();
     const { savedLabels, saveLabel, deleteLabel } = useSavedLabels();
 
     const handleSubmit = async (e) => {
@@ -61,6 +59,7 @@ const LabelGenerator = () => {
                         image={generatedImage}
                         formData={formData}
                         onSave={handleSaveLabel}
+                        prompt={prompt}
                     />
                 )}
 

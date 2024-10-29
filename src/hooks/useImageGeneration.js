@@ -5,6 +5,7 @@ export const useImageGeneration = () => {
     const [loading, setLoading] = useState(false);
     const [generatedImage, setGeneratedImage] = useState(null);
     const [status, setStatus] = useState({message: '', severity: 'info'});
+    const [prompt, setPrompt] = useState('');
 
     const generateImage = async (formData, settings) => {
         setLoading(true);
@@ -13,6 +14,7 @@ export const useImageGeneration = () => {
         try {
             // Генерируем промпт с учетом всех характеристик вина
             const {prompt, negativePrompt} = await generatePrompt(formData.style, formData);
+            setPrompt(prompt);
 
             console.log('Generated prompt:', prompt); // Для отладки
 
@@ -86,5 +88,5 @@ export const useImageGeneration = () => {
         }
     };
 
-    return {loading, generatedImage, status, generateImage, generateSeries, setStatus};
+    return {loading, generatedImage, status, generateImage, generateSeries, setStatus, prompt};
 };

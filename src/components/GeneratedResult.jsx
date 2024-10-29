@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useRef, useState} from 'react';
 import {
     Box,
     Typography,
@@ -18,8 +18,9 @@ import ShareIcon from '@mui/icons-material/Share';
 import TextOverlay from './TextOverlay';
 import LabelPreview from './LabelPreview';
 
-const GeneratedResult = ({ image, formData, onSave }) => {
+const GeneratedResult = ({ image, formData, onSave, prompt }) => {
     const [previewOpen, setPreviewOpen] = useState(false);
+    const promptRef = useRef(null);
 
     const handleDownload = () => {
         const canvas = document.querySelector('canvas');
@@ -27,6 +28,13 @@ const GeneratedResult = ({ image, formData, onSave }) => {
         link.download = `wine-label-${formData.name}-${formData.year}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
+    };
+
+    const handleCopyPrompt = () => {
+        navigator.clipboard.writeText(prompt).then(() => {
+        }, (err) => {
+            console.error('Failed to copy prompt: ', err);
+        });
     };
 
     const handleShare = async () => {
@@ -138,6 +146,21 @@ const GeneratedResult = ({ image, formData, onSave }) => {
                     </Button>
                 </DialogActions>
             </Dialog>
+
+            {prompt && (
+                <Box sx={{ mt: 2 }}>
+                    <Typography variant="body2" ref={promptRef}>
+                        Prompt: {prompt}
+                    </Typography>
+                    <Button
+                        size="small"
+                        onClick={handleCopyPrompt}
+                        sx={{ ml: 1 }}
+                    >
+                        Копировать промпт
+                    </Button>
+                </Box>
+            )}
         </Box>
     );
 };

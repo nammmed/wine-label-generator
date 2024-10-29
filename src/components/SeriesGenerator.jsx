@@ -11,9 +11,8 @@ import {
     Grid
 } from '@mui/material';
 
-const SeriesGenerator = ({ basePrompt, onGenerate }) => {
+const SeriesGenerator = ({ basePrompt, seed, onGenerate }) => {
     const [seriesNames, setSeriesNames] = useState(['']);
-    const [variations, setVariations] = useState(3); // количество вариаций для каждого имени
 
     const handleAddName = () => {
         setSeriesNames([...seriesNames, '']);
@@ -26,22 +25,20 @@ const SeriesGenerator = ({ basePrompt, onGenerate }) => {
     };
 
     const handleGenerate = () => {
-        // Генерируем серию для каждого имени
+        // Генерируем этикетки с тем же seed'ом для сохранения стиля
         seriesNames.forEach(name => {
-            for (let i = 0; i < variations; i++) {
-                onGenerate({
-                    ...basePrompt,
-                    seed: Math.floor(Math.random() * 1000000), // разные сиды для вариаций
-                    name: name
-                });
-            }
+            onGenerate({
+                ...basePrompt,
+                seed: seed, // используем тот же seed
+                name: name
+            });
         });
     };
 
     return (
         <Box>
             <Typography variant="h6" gutterBottom>
-                Генерация серии этикеток
+                Создание серии в том же стиле
             </Typography>
 
             {seriesNames.map((name, index) => (
@@ -59,14 +56,6 @@ const SeriesGenerator = ({ basePrompt, onGenerate }) => {
                 Добавить название
             </Button>
 
-            <TextField
-                type="number"
-                label="Количество вариаций"
-                value={variations}
-                onChange={(e) => setVariations(Number(e.target.value))}
-                margin="normal"
-            />
-
             <Button
                 variant="contained"
                 onClick={handleGenerate}
@@ -78,5 +67,3 @@ const SeriesGenerator = ({ basePrompt, onGenerate }) => {
         </Box>
     );
 };
-
-export default SeriesGenerator;

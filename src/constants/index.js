@@ -5,5 +5,6 @@ export const styleOptions = [
     { label: 'Винтажный постер', value: 'vintage poster' },
     { label: 'Геометрическая абстракция', value: 'geometric abstract' },
     { label: 'Космическая фантазия', value: 'space fantasy' },
-    { label: 'Поп-арт', value: 'pop art' }
+    { label: 'Поп-арт', value: 'pop art' },
+    { label: 'Ghibli', value: 'ghibli landscape' },
 ];

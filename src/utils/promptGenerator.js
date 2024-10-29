@@ -20,6 +20,19 @@ const centerAreaConfig = [
     "high contrast with text areas"
 ].join(", ");
 
+const textAreaConfig = [
+    "bottom third clear space",
+    "simple gradient background in bottom area",
+    "neutral bottom area",
+    "soft muted colors in bottom third",
+    "clean bottom space",
+    "minimal elements in bottom third",
+    "light neutral background in text area",
+    "no complex patterns in bottom area",
+    "avoid bright colors in bottom third",
+    "solid color bottom space"
+].join(", ");
+
 const translateText = async (text) => {
     try {
         const response = await fetch(
@@ -148,17 +161,43 @@ const styleConfigs = {
         colors: "vibrant pop art colors, bold color blocks",
         atmosphere: "bold, energetic, graphic",
         extras: "ben-day dots, clean pop art style, andy warhol inspired"
+    },
+    'ghibli landscape': {
+        pattern: "Studio Ghibli background art style, Hayao Miyazaki art direction, painted environment",
+        character: "dreamy landscape, ethereal natural scenery, soft detailed background",
+        colors: "soft watercolor palette, gentle color gradients, Ghibli signature colors",
+        atmosphere: "whimsical, serene, magical realism",
+        extras: "hand-painted background style, subtle color transitions, Ghibli environmental detail",
+        bottomArea: "gentle gradient fade, soft atmospheric colors",
+        composition: "main elements float in upper space, ethereal background depth",
+        specific: [
+            "Ghibli cloud patterns",
+            "painted sky technique",
+            "natural color harmony",
+            "atmospheric perspective",
+            "Studio Ghibli background artist style",
+            "Kazuo Oga painting style",
+            "subtle environmental details",
+            "soft lighting effects"
+        ].join(", ")
     }
 };
 
 // Негативные промпты
 const baseNegativePrompt = [
-    "[text:1.8]",
-    "[letters:1.8]",
-    "[symbols:1.8]",
-    "[writing:1.8]",
-    "[typography:1.8]",
-    "[numbers:1.8]",
+    "[text:15152.0]",
+    "[letters:2.0]",
+    "[symbols:2.0]",
+    "[writing:2.0]",
+    "[typography:2.0]",
+    "[numbers:2.0]",
+    "text overlay",
+    "text elements",
+    "written words",
+    "calligraphy",
+    "handwriting",
+    "font",
+    "label text",
     "[photo-realistic:1.5]",
     "[3d:1.5]",
     "[realistic:1.5]",
@@ -167,19 +206,16 @@ const baseNegativePrompt = [
     "(bottles:1.6)",
     "(glasses:1.6)",
     "(drinking:1.6)",
-    "(human:1.5)",
-    "(woman:1.5)",
     "(face:1.5)",
     "(nude:1.8)",
     "(nsfw:1.8)",
     "(dark background:1.4)",
-    "(full frame pattern:1.4)",
     "(busy background:1.4)",
     "realistic objects",
     "complex details",
     "photographic elements",
     "busy composition",
-    "product photography"
+    "product photography",
 ].join(", ");
 
 /**
@@ -230,12 +266,16 @@ export const generatePrompt = async (style, wineData) => {
         baseQualityConfig,
         themePrompt,
         centerAreaConfig,
+        textAreaConfig,
         modifiedStyle.pattern,
         modifiedStyle.character,
         modifiedStyle.colors,
         modifiedStyle.atmosphere,
         modifiedStyle.extras,
         `wine characteristics: ${wineCharacteristics.join(', ')}`,
+        `(main subject:1.5)`,
+        `centered composition, subject in the center, clear background around subject`,
+        '2:3 aspect ratio, vertical compositio',
     ];
 
     return {
